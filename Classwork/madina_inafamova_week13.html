@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MadinaInagamova_Week13</title>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #textPara {
+      font-size: 18px;
+      color: #444;
+      margin: 20px 0;
+    }
+
+    button {
+      margin: 5px;
+      padding: 10px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      background-color: #3498db;
+      color: white;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    input {
+      padding: 8px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    #output {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #006400;
+      font-weight: bold;
+    }
+
+    #myList {
+      margin-top: 15px;
+      list-style: none;
+      padding: 0;
+    }
+
+    #myList li {
+      background: #eee;
+      margin: 5px auto;
+      padding: 8px;
+      width: 200px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>jQuery Practice Page</h1>
+
+  <p id="textPara">This is a paragraph of text.</p>
+
+  <button id="btnChangeText">Change Text</button>
+  <button id="btnChangeColor">Change Color</button>
+  <button id="btnHideShow">Hide/Show Paragraph</button>
+  <br><br>
+
+  <input type="text" id="inputName" placeholder="Enter your name">
+  <button id="btnGreet">Greet Me</button>
+
+  <div id="output"></div>
+
+  <ul id="myList">
+    <li>Item 1</li>
+  </ul>
+  <button id="btnAddItem">Add Item</button>
+
+  <!-- jQuery Script -->
+  <script>
+    $(document).ready(function() {
+
+      // Change the paragraph text
+      $("#btnChangeText").click(function() {
+        $("#textPara").text("The text has been changed using jQuery!");
+      });
+
+      // Change paragraph color
+      $("#btnChangeColor").click(function() {
+        $("#textPara").css("color", "blue");
+      });
+
+      // Greet user
+      $("#btnGreet").click(function() {
+        let name = $("#inputName").val();
+        if (name.trim() === "") {
+          $("#output").html("Please enter your name first!");
+        } else {
+          $("#output").html("Hello, " + name + "! Welcome!");
+        }
+      });
+
+      // Hide or show paragraph
+      $("#btnHideShow").click(function() {
+        $("#textPara").toggle(); // hides if visible, shows if hidden
+      });
+
+      // Append new item to list
+      $("#btnAddItem").click(function() {
+        $("#myList").append("<li>New Item Added!</li>");
+      });
+
+    });
+  </script>
+
+</body>
+</html>
