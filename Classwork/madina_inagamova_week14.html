@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Week 13 • AJAX Practice</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0c10;
+      color: #c5c6c7;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+
+    #btnLoad {
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: none;
+      background-color: #45a29e;
+      color: #ffffff;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    #btnLoad:hover {
+      background-color: #66fcf1;
+      color: #0b0c10;
+      transform: translateY(-1px);
+    }
+
+    #output {
+      max-width: 900px;
+      width: 100%;
+      background: #1f2833;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(197, 198, 199, 0.2);
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    li img {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .meal-name {
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .meal-id {
+      font-size: 0.9rem;
+      color: #c5c6c7;
+    }
+
+    .error {
+      color: #ff6b6b;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Week 13 – AJAX API Practice</h1>
+
+  <button id="btnLoad">Load Data</button>
+
+  <div id="output">
+    <p>Click <strong>Load Data</strong> to fetch seafood meals from the API.</p>
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    const btnLoad = document.getElementById("btnLoad");
+    const output = document.getElementById("output");
+
+    btnLoad.addEventListener("click", () => {
+      output.innerHTML = "<p>Loading data...</p>";
+
+      fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood")
+        .then((response) => {
+          if (!response.ok) throw new Error("Network error");
+          return response.json();
+        })
+        .then((data) => {
+          const meals = data.meals || [];
+          const firstMeals = meals.slice(0, 8);
+
+          const listItems = firstMeals
+            .map(
+              (meal) => `
+              <li>
+                <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
+                <div>
+                  <div class="meal-name">${meal.strMeal}</div>
+                  <div class="meal-id">Meal ID: ${meal.idMeal}</div>
+                </div>
+              </li>
+            `
+            )
+            .join("");
+
+          output.innerHTML = `
+            <h2>Seafood Meals (First ${firstMeals.length})</h2>
+            <ul>
+              ${listItems}
+            </ul>
+          `;
+        })
+        .catch((err) => {
+          output.innerHTML =
+            "<p class='error'>Could not load data. Please try again.</p>";
+        });
+    });
+  </script>
+
+</body>
+</html>
